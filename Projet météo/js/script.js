@@ -26,7 +26,32 @@ function recherche()
 		}
 	});
 }
+function rechercheByLatLong(lat,long)
+{
+	$.ajax({
+		url: "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+ long +"&units=metric&APPID=032aa7acbc4a4d21a85dc6638409262b",
+		success: function( result ) {
+		console.log(result);
+		$('#location').html(result.name)
+		$( "#temperature" ).html( Math.floor(result.main.temp) + "<sup>o</sup>C");
+		},
+		error: function(result){
+			$( "#ex1" ).html( "Cette ville n'existe pas" );
+		}
+	});
+}
 $('document').ready(function(){
 	$(".day").html(tab_jour[date.getDay()]);
 	$(".date").html(jour + " " + tab_mois[mois]);
+	
+	function maPosition(position) {
+		var infopos = "Position déterminée :\n";
+		infopos += "Latitude : "+position.coords.latitude +"\n";
+		infopos += "Longitude: "+position.coords.longitude+"\n";
+	 	infopos += "Altitude : "+position.coords.altitude +"\n";
+	  	rechercheByLatLong(position.coords.latitude,position.coords.longitude);
+	}
+
+	if(navigator.geolocation)
+	  navigator.geolocation.getCurrentPosition(maPosition);
 });
