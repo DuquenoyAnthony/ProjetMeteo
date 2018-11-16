@@ -10,16 +10,19 @@ var minute  = date.getMinutes();
 var seconde = date.getSeconds();
 
 
-function recherche()
+function recherche(nomVille)
 {
-	var nomVille = document.getElementById("rechercheVille").value;
 	$.ajax({
 		url: "https://api.openweathermap.org/data/2.5/weather?q="+ nomVille +"&units=metric&APPID=032aa7acbc4a4d21a85dc6638409262b",
 		success: function( result ) {
 		console.log(result);
-		var date = new Date();
-		var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
-		$( "#ex1" ).html( "Il fait <strong>" + result.main.temp + "</strong> degrés à " + result.name + " le "+ tab_jour[date.getDay()]);
+		/*var $lat = result.coord.lat;
+		var $long = result.coord.lon;
+		rechercheByLatLong($lat, $long);*/
+		$('#location').html(result.name)
+		$( "#temperature" ).html( Math.floor(result.main.temp) + "<sup>o</sup>C");
+		$('#vent').html("<img src=\"images/icon-wind.png\" alt=\"\">" + result.wind.speed + "km/h");
+		$('#humidite').html("<img src=\"images/icon-umberella.png\" alt=\"\">" + result.main.humidity + "%");
 		},
 		error: function(result){
 			$( "#ex1" ).html( "Cette ville n'existe pas" );
@@ -34,11 +37,11 @@ function rechercheByLatLong(lat,long)
 		console.log(result);
 		$('#location').html(result.name)
 		$( "#temperature" ).html( Math.floor(result.main.temp) + "<sup>o</sup>C");
-		$('#vent').append(result.wind.speed + "km/h");
-		$('#humidite').append(result.main.humidity + "%");
+		$('#vent').html("<img src=\"images/icon-wind.png\" alt=\"\">" + result.wind.speed + "km/h");
+		$('#humidite').html("<img src=\"images/icon-umberella.png\" alt=\"\">" + result.main.humidity + "%");
 		},
 		error: function(result){
-			$( "#ex1" ).html( "Cette ville n'existe pas" );
+			$( ".find-location" ).html( "Cette ville n'existe pas" );
 		}
 	});
 }
@@ -50,9 +53,15 @@ $('document').ready(function(){
 	  	rechercheByLatLong(position.coords.latitude,position.coords.longitude);
 	}
 
-	navigator.geolocation.getCurrentPosition(maPosition);
+	function obtenirParametre (sVar) {
+  		return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+	}
 
-	$('#searchVille').click(function(){
-		recherche();
-	})
+	if (window.location.search) {
+		var nomVille = obtenirParametre("rechercheVille");
+		recherche(nomVille);
+	}
+	else{
+		navigator.geolocation.getCurrentPosition(maPosition);
+	}
 });
