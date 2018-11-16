@@ -34,6 +34,8 @@ function rechercheByLatLong(lat,long)
 		console.log(result);
 		$('#location').html(result.name)
 		$( "#temperature" ).html( Math.floor(result.main.temp) + "<sup>o</sup>C");
+		$('#vent').append(result.wind.speed + "km/h");
+		$('#humidite').append(result.main.humidity + "%");
 		},
 		error: function(result){
 			$( "#ex1" ).html( "Cette ville n'existe pas" );
@@ -48,6 +50,9 @@ $('document').ready(function(){
 	  	rechercheByLatLong(position.coords.latitude,position.coords.longitude);
 	}
 
-	if(navigator.geolocation)
-	  navigator.geolocation.getCurrentPosition(maPosition);
+	navigator.geolocation.getCurrentPosition(maPosition);
+
+	$('#searchVille').click(function(){
+		recherche();
+	})
 });

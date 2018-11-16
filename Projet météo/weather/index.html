@@ -56,9 +56,9 @@
 
 			<div class="hero" data-bg-image="images/banner.png">
 				<div class="container">
-					<form action="#" class="find-location">
-						<input type="text" placeholder="Rechercher une ville">
-						<input type="submit" value="Rechercher" onclick="recherche();">
+					<form  class="find-location">
+						<input type="text" id="rechercheVille" placeholder="Rechercher une ville">
+						<input type="submit" id="searchVille" value="Rechercher" >
 					</form>
 
 				</div>
@@ -79,9 +79,8 @@
 										<img src="images/icons/icon-1.svg" alt="" width=90>
 									</div>	
 								</div>
-								<span><img src="images/icon-umberella.png" alt="">20%</span>
-								<span><img src="images/icon-wind.png" alt="">18km/h</span>
-								<span><img src="images/icon-compass.png" alt="">East</span>
+								<span id="humidite"><img src="images/icon-umberella.png" alt=""></span>
+								<span id="vent"><img src="images/icon-wind.png" alt=""></span>
 							</div>
 						</div>
 						<div class="forecast">
