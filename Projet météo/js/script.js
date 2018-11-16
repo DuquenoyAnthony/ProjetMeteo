@@ -45,10 +45,6 @@ $('document').ready(function(){
 	$(".date").html(jour + " " + tab_mois[mois]);
 	
 	function maPosition(position) {
-		var infopos = "Position déterminée :\n";
-		infopos += "Latitude : "+position.coords.latitude +"\n";
-		infopos += "Longitude: "+position.coords.longitude+"\n";
-	 	infopos += "Altitude : "+position.coords.altitude +"\n";
 	  	rechercheByLatLong(position.coords.latitude,position.coords.longitude);
 	}
 
